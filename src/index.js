@@ -1,12 +1,105 @@
 import React from "react";
 import ReactDOM from "react-dom";
+//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-function Home() {
+/* Add NavLink to import */
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Switch,
+} from "react-router-dom";
+
+/* Add basic styling for NavLinks */
+const linkStyles = {
+  width: "100px",
+  padding: "12px",
+  margin: "0 6px 6px",
+  background: "blue",
+  textDecoration: "none",
+  color: "white",
+};
+
+/* add the navbar component */
+function Navbar() {
   return (
     <div>
-      <h1>Home!</h1>
+      <NavLink
+        to="/"
+        /* set exact so it knows to only set activeStyle when route is deeply equal to link */
+        exact
+        /* add styling to Navlink */
+        style={linkStyles}
+        /* add prop for activeStyle */
+        activeStyle={{
+          background: "darkblue",
+        }}
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/about"
+        exact
+        style={linkStyles}
+        activeStyle={{
+          background: "darkblue",
+        }}
+      >
+        About
+      </NavLink>
+      <NavLink
+        to="/login"
+        exact
+        style={linkStyles}
+        activeStyle={{
+          background: "darkblue",
+        }}
+      >
+        Login
+      </NavLink>
     </div>
   );
 }
 
-ReactDOM.render(<Home />, document.getElementById("root"));
+function Home() {
+  return <h1>Home!</h1>;
+}
+
+function About() {
+  return <h1>This is my about component!</h1>;
+}
+
+function Login() {
+  return (
+    <form>
+      <h1>Login</h1>
+      <div>
+        <input type="text" name="username" placeholder="Username" />
+        <label htmlFor="username">Username</label>
+      </div>
+      <div>
+        <input type="password" name="password" placeholder="Password" />
+        <label htmlFor="password">Password</label>
+      </div>
+      <input type="submit" value="Login" />
+    </form>
+  );
+}
+
+ReactDOM.render(
+  <Router>
+    <NavBar />
+    <Switch>
+      <Route exact path="/about">
+        <About />
+      </Route>
+      <Route exact path="/login">
+        <Login />
+      </Route>
+      <Route exact path="/">
+        <Home />
+      </Route>
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+); 
